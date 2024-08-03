@@ -146,8 +146,16 @@
             <input type="text" id="remainFragments">
         </div>
         <div class="form-group">
-            <label for="dungeon">副本</label>
-            <input type="checkbox" id="dungeon">
+            <label for="dungeonCompleted">本周副本已打</label>
+            <input type="checkbox" id="dungeonCompleted">
+        </div>
+        <div class="form-group">
+            <label for="dungeonRewards">副本獎勳</label>
+            <select id="dungeonRewards">
+                <option value="0">免費</option>
+                <option value="200">200楓點</option>
+                <option value="360">360楓點</option>
+            </select>
         </div>
         <button class="btn" onclick="calculate()">計算</button>
         <div class="result">
@@ -162,8 +170,20 @@
     </div>
     <script>
         function calculate() {
+            //核心每級所需
+            var skillLevelArr = [0, 30, 35, 40, 45, 50, 55, 60, 65, 200, 80, 90, 100, 110, 120, 130, 140, 150, 160, 350, 170, 180, 190, 200, 210, 220, 230, 240, 250, 500, 0];
+            var masterLevelArr = [50, 15, 18, 20, 23, 25, 28, 30, 33, 100, 40, 45, 50, 55, 60, 65, 70, 75, 80, 175, 85, 90, 95, 100, 105, 110, 115, 120, 125, 250, 0];
+            var enhancementLevelArr = [75, 23, 27, 30, 34, 38, 42, 45, 49, 150, 60, 68, 75, 83, 90, 98, 105, 113, 120, 263, 128, 135, 143, 150, 158, 165, 173, 180, 188, 375, 0];
+            var commonLevelArr = [125, 38, 44, 50, 57, 63, 69, 75, 82, 300, 110, 124, 138, 152, 165, 179, 193, 207, 220, 525, 234, 248, 262, 275, 289, 303, 317, 330, 344, 750, 0];
+            // 核心升級總需
+            var all_skill_frags = skillLevelArr.reduce((a, b) => a + b, 0);
+            var all_master_frags = masterLevelArr.reduce((a, b) => a + b, 0);
+            var all_enhance_frags = enhancementLevelArr.reduce((a, b) => a + b, 0);
+            var all_common_frags = commonLevelArr.reduce((a, b) => a + b, 0);
+            var allFrag = all_skill_frags + all_master_frags * 2 + all_enhance_frags * 4 + all_common_frags;
+            var noCommonAllFrag = all_skill_frags + all_master_frags * 2 + all_enhance_frags * 4;
             // 獲取輸入值
-            var skillLevel = parseInt(document.getElementById('skillLevel').value) || 0;
+            var skillLevel = parseInt(document.getElementById('skillLevel').value) || 1;
             var masterLevel1 = parseInt(document.getElementById('masterLevel1').value) || 0;
             var masterLevel2 = parseInt(document.getElementById('masterLevel2').value) || 0;
             var enhancementLevel1 = parseInt(document.getElementById('enhancementLevel1').value) || 0;
@@ -172,118 +192,114 @@
             var enhancementLevel4 = parseInt(document.getElementById('enhancementLevel4').value) || 0;
             var commonLevel = parseInt(document.getElementById('commonLevel').value) || 0;
             var remainFragments = parseInt(document.getElementById('remainFragments').value) || 0;
-            var dungeon = document.getElementById('dungeon').checked;
-
-            // 碎片數組
-            var skillLevelArr = [0, 30, 35, 40, 45, 50, 55, 60, 65, 200, 80, 90, 100, 110, 120, 130, 140, 150, 160, 350, 170, 180, 190, 200, 210, 220, 230, 240, 250, 500, 0];
-            var masterLevelArr = [50, 15, 18, 20, 23, 25, 28, 30, 33, 100, 40, 45, 50, 55, 60, 65, 70, 75, 80, 175, 85, 90, 95, 100, 105, 110, 115, 120, 125, 250, 0];
-            var enhancementLevelArr = [75, 23, 27, 30, 34, 38, 42, 45, 49, 150, 60, 68, 75, 83, 90, 98, 105, 113, 120, 263, 128, 135, 143, 150, 158, 165, 173, 180, 188, 375, 0];
-            var commonLevelArr = [125, 38, 44, 50, 57, 63, 69, 75, 82, 300, 110, 124, 138, 152, 165, 179, 193, 207, 220, 525, 234, 248, 262, 275, 289, 303, 317, 330, 344, 750, 0];
-
-            var all_skill_frags = skillLevelArr.reduce((a, b) => a + b, 0);
-            var all_master_frags = masterLevelArr.reduce((a, b) => a + b, 0);
-            var all_enhance_frags = enhancementLevelArr.reduce((a, b) => a + b, 0);
-            var all_common_frags = commonLevelArr.reduce((a, b) => a + b, 0);
-
-            var allFrag = all_skill_frags + all_master_frags * 2 + all_enhance_frags * 4 + all_common_frags;
-            var noCommonAllFrag = all_skill_frags + all_master_frags * 2 + all_enhance_frags * 4;
-
-            var s1 = skillLevelArr.slice(0, skillLevel).reduce((a, b) => a + b, 0);
-            var m1 = masterLevelArr.slice(0, masterLevel1).reduce((a, b) => a + b, 0);
-            var m2 = masterLevelArr.slice(0, masterLevel2).reduce((a, b) => a + b, 0);
-            var e1 = enhancementLevelArr.slice(0, enhancementLevel1).reduce((a, b) => a + b, 0);
-            var e2 = enhancementLevelArr.slice(0, enhancementLevel2).reduce((a, b) => a + b, 0);
-            var e3 = enhancementLevelArr.slice(0, enhancementLevel3).reduce((a, b) => a + b, 0);
-            var e4 = enhancementLevelArr.slice(0, enhancementLevel4).reduce((a, b) => a + b, 0);
-            var c1 = commonLevelArr.slice(0, commonLevel).reduce((a, b) => a + b, 0);
-
-            var currentConsumed = s1 + m1 + m2 + e1 + e2 + e3 + e4 + c1 + remainFragments;
-            var noCommonCurrentConsumed = s1 + m1 + m2 + e1 + e2 + e3 + e4 + remainFragments;
-
-            var needFrag = allFrag - currentConsumed;
+            //副本完成狀況與種類
+            var nowDungeon = document.getElementById('dungeonCompleted').checked;
+            var dungeonRewards = parseInt(document.getElementById('dungeonRewards').value);
+            //當前核心等級
+            var currentLevel = [skillLevel, masterLevel1, masterLevel2, enhancementLevel1, enhancementLevel2, enhancementLevel3, enhancementLevel4, commonLevel, remainFragments];
+            //已消耗碎片數量
+            var s1 = skillLevelArr.slice(0, currentLevel[0]).reduce((a, b) => a + b, 0);
+            var m1 = masterLevelArr.slice(0, currentLevel[1]).reduce((a, b) => a + b, 0);
+            var m2 = masterLevelArr.slice(0, currentLevel[2]).reduce((a, b) => a + b, 0);
+            var e1 = enhancementLevelArr.slice(0, currentLevel[3]).reduce((a, b) => a + b, 0);
+            var e2 = enhancementLevelArr.slice(0, currentLevel[4]).reduce((a, b) => a + b, 0);
+            var e3 = enhancementLevelArr.slice(0, currentLevel[5]).reduce((a, b) => a + b, 0);
+            var e4 = enhancementLevelArr.slice(0, currentLevel[6]).reduce((a, b) => a + b, 0);
+            var c1 = commonLevelArr.slice(0, currentLevel[7]).reduce((a, b) => a + b, 0);
+            var currentConsumed = s1 + m1 + m2 + e1 + e2 + e3 + e4 + c1 + currentLevel[8];
+            var noCommonCurrentConsumed = s1 + m1 + m2 + e1 + e2 + e3 + e4 + currentLevel[8];
+            var needFrag         = allFrag - currentConsumed;
             var noCommonNeedFrag = noCommonAllFrag - noCommonCurrentConsumed;
-
-            // 計算當周碎片數量和天數
+            //獲取當天星期,每日、每周、副本獲得量
             var now = new Date();
-            var nowWeekday = now.getDay();
+            var hnowWeekday = now.getDay();
+            var nowWeekday;
+            if (hnowWeekday == 0){
+                nowWeekday = 6;
+            } else {
+                nowWeekday = hnowWeekday - 1;
+            }
             var fragmentsCollected = 0;
             var daysNeeded = 0;
-
-            if (nowWeekday < 3) {
-                fragmentsCollected = nowWeekday * 12 + (Math.floor(nowWeekday / 3)) * 50;
-                if (!dungeon) {
-                    fragmentsCollected += (nowWeekday >= 3) * 30;
-                }
+            var dailyfrag = 12;
+            var weeeklyfrag = 50;
+            var dungeonfrag = 30;
+            if (dungeonRewards == 0) {
+                dungeonfrag = 30;
+            } else if (dungeonRewards == 200) {
+                dungeonfrag = 60;
+            } else if (dungeonRewards == 360) {
+                dungeonfrag = 120;
+            }
+            var wholeweekfrags = dailyfrag * 7 + weeeklyfrag + dungeonfrag;
+            //根據副本進行狀況計算當周
+            if (nowWeekday < 2) {
+                fragmentsCollected = wholeweekfrags - dailyfrag * (nowWeekday + 1);
                 daysNeeded = 6 - nowWeekday;
-            } else if (nowWeekday == 3 && !dungeon) {
-                fragmentsCollected = 66;
+            } else if (nowWeekday == 2) {
+                fragmentsCollected = wholeweekfrags - (dailyfrag * 3 + weeeklyfrag);
+                daysNeeded = 4;
+            } else if (nowWeekday == 3 && !nowDungeon) {
+                fragmentsCollected = wholeweekfrags - (dailyfrag * 4 + weeeklyfrag);
                 daysNeeded = 3;
-            } else if (nowWeekday == 4 && !dungeon) {
-                fragmentsCollected = 54;
+            } else if (nowWeekday == 4 && !nowDungeon) {
+                fragmentsCollected = wholeweekfrags - (dailyfrag * 5 + weeeklyfrag);
                 daysNeeded = 2;
-            } else if (nowWeekday == 5 && !dungeon) {
-                fragmentsCollected = 42;
+            } else if (nowWeekday == 5 && !nowDungeon) {
+                fragmentsCollected = wholeweekfrags - (dailyfrag * 6 + weeeklyfrag);
                 daysNeeded = 1;
-            } else if (nowWeekday == 6 && !dungeon) {
-                fragmentsCollected = 30;
-                daysNeeded = 0;
-            } else if (nowWeekday >= 3 && dungeon) {
-                fragmentsCollected = 84 - (7 - nowWeekday) * 12;
-                daysNeeded = nowWeekday - 3;
+            } else if (nowWeekday == 6 && nowDungeon) {
+                fragmentsCollected = dungeonfrag;
             } else {
-                fragmentsCollected = 84 - (7 - nowWeekday) * 12;
-                daysNeeded = nowWeekday - 3;
+                fragmentsCollected = wholeweekfrags - (dailyfrag * (nowWeekday + 1) + weeeklyfrag + dungeonfrag);
+                daysNeeded = 6 - nowWeekday;
             }
-
-            // 計算當周以外的剩餘天數
-            while ((needFrag - fragmentsCollected) > 164) {
+            var noCommonFragmentsCollected = fragmentsCollected;
+            var noCommonDaysNeeded = daysNeeded;
+            //當周以外的剩餘天數
+            while ((needFrag - fragmentsCollected) > wholeweekfrags) {
                 daysNeeded += 7;
-                fragmentsCollected += 164;
+                fragmentsCollected += wholeweekfrags;
             }
-
+            //不計共用當周以外的剩餘天數
+            while ((noCommonNeedFrag - noCommonFragmentsCollected) > wholeweekfrags) {
+                noCommonDaysNeeded += 7;
+                noCommonFragmentsCollected += wholeweekfrags;
+            }
+            //最後一周的天數    
             var remainingFragments = needFrag - fragmentsCollected;
-            if (remainingFragments <= 12) {
+            if (remainingFragments <= dailyfrag) {
                 daysNeeded += 1;
-            } else if (remainingFragments <= 24) {
+            } else if (remainingFragments <= dailyfrag * 2) {
                 daysNeeded += 2;
-            } else if (remainingFragments <= 86) {
+            } else if (remainingFragments <= (dailyfrag * 3) + weeeklyfrag) {
                 daysNeeded += 3;
-            } else if (remainingFragments <= 128) {
+            } else if (remainingFragments <= ((dailyfrag * 4) + weeeklyfrag + dungeonfrag)) {
                 daysNeeded += 4;
-            } else if (remainingFragments <= 140) {
+            } else if (remainingFragments <= ((dailyfrag * 5) + weeeklyfrag + dungeonfrag)) {
                 daysNeeded += 5;
-            } else if (remainingFragments <= 152) {
+            } else if (remainingFragments <= ((dailyfrag * 6) + weeeklyfrag + dungeonfrag)) {
                 daysNeeded += 6;
-            } else if (remainingFragments <= 164) {
+            } else if (remainingFragments <= ((dailyfrag * 7) + weeeklyfrag + dungeonfrag)) {
                 daysNeeded += 7;
             }
-
-            // 計算不計共用碎片的剩餘天數
-            var noCommonFragmentsCollected = 0;
-            var noCommonDaysNeeded = 0;
-
-            while ((noCommonNeedFrag - noCommonFragmentsCollected) > 164) {
-                noCommonDaysNeeded += 7;
-                noCommonFragmentsCollected += 164;
-            }
-
+            //不計共用最後一周的天數 
             var noCommonRemainingFragments = noCommonNeedFrag - noCommonFragmentsCollected;
-            if (noCommonRemainingFragments <= 12) {
+            if (noCommonRemainingFragments <= dailyfrag) {
                 noCommonDaysNeeded += 1;
-            } else if (noCommonRemainingFragments <= 24) {
+            } else if (noCommonRemainingFragments <= (dailyfrag * 2)) {
                 noCommonDaysNeeded += 2;
-            } else if (noCommonRemainingFragments <= 86) {
+            } else if (noCommonRemainingFragments <= (dailyfrag * 3) + weeeklyfrag) {
                 noCommonDaysNeeded += 3;
-            } else if (noCommonRemainingFragments <= 128) {
+            } else if (noCommonRemainingFragments <= ((dailyfrag * 4) + weeeklyfrag + dungeonfrag)) {
                 noCommonDaysNeeded += 4;
-            } else if (noCommonRemainingFragments <= 140) {
+            } else if (noCommonRemainingFragments <= ((dailyfrag * 5) + weeeklyfrag + dungeonfrag)) {
                 noCommonDaysNeeded += 5;
-            } else if (noCommonRemainingFragments <= 152) {
+            } else if (noCommonRemainingFragments <= ((dailyfrag * 6) + weeeklyfrag + dungeonfrag)) {
                 noCommonDaysNeeded += 6;
-            } else if (noCommonRemainingFragments <= 164) {
+            } else if (noCommonRemainingFragments <= ((dailyfrag * 7) + weeeklyfrag + dungeonfrag)) {
                 noCommonDaysNeeded += 7;
             }
-
             // 更新結果
             document.getElementById('currentConsumedLabel').innerText = currentConsumed;
             document.getElementById('needFragsLabel').innerText = needFrag;
@@ -303,12 +319,12 @@
             localStorage.setItem('enhancementLevel4', enhancementLevel4);
             localStorage.setItem('commonLevel', commonLevel);
             localStorage.setItem('remainFragments', remainFragments);
-            localStorage.setItem('dungeon', dungeon);
+            localStorage.setItem('dungeonCompleted', dungeonCompleted);
+            localStorage.setItem('dungeonRewards', dungeonRewards);
         }
-
-        // 當頁面加載時讀取 localStorage
+        //當頁面加載時讀取 localStorage
         window.onload = function() {
-            document.getElementById('skillLevel').value = localStorage.getItem('skillLevel') || 0;
+            document.getElementById('skillLevel').value = localStorage.getItem('skillLevel') || 1;
             document.getElementById('masterLevel1').value = localStorage.getItem('masterLevel1') || 0;
             document.getElementById('masterLevel2').value = localStorage.getItem('masterLevel2') || 0;
             document.getElementById('enhancementLevel1').value = localStorage.getItem('enhancementLevel1') || 0;
@@ -317,7 +333,8 @@
             document.getElementById('enhancementLevel4').value = localStorage.getItem('enhancementLevel4') || 0;
             document.getElementById('commonLevel').value = localStorage.getItem('commonLevel') || 0;
             document.getElementById('remainFragments').value = localStorage.getItem('remainFragments') || 0;
-            document.getElementById('dungeon').checked = localStorage.getItem('dungeon') === 'true';
+            document.getElementById('dungeonCompleted').checked = localStorage.getItem('dungeonCompleted') === 'true';
+            document.getElementById('dungeonRewards').value = localStorage.getItem('dungeonRewards') || 0;
             
             // 重新計算以顯示保存的結果
             calculate();
