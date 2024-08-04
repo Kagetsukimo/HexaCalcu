@@ -191,7 +191,12 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="commonLevel">靈魂雅努斯</label>
+            <div>
+                <label id="commonLabel">靈魂雅努斯</label>
+            </div>
+            <div>
+                <label id="remaincommonfrags"></label>
+            </div>
             <select id="commonLevel">
                 <script>
                     for (let i = 0; i <= 30; i++) {
@@ -331,6 +336,7 @@
             var remainenhancefrags2 = document.getElementById('remainenhancefrags2').value;
             var remainenhancefrags3 = document.getElementById('remainenhancefrags3').value;
             var remainenhancefrags4 = document.getElementById('remainenhancefrags4').value;
+            var remaincommonfrags = document.getElementById('remaincommonfrags').value;
             var remainFragments = parseInt(document.getElementById('remainFragments').value) || 0;
             var jobSelect = document.getElementById('jobSelect').value;
             
@@ -458,6 +464,7 @@
             document.getElementById('remainenhancefrags2').innerText = '已消耗:' + e2 + ' 還需要:' + (all_enhance_frags - e2);
             document.getElementById('remainenhancefrags3').innerText = '已消耗:' + e3 + ' 還需要:' + (all_enhance_frags - e3);
             document.getElementById('remainenhancefrags4').innerText = '已消耗:' + e4 + ' 還需要:' + (all_enhance_frags - e4);
+            document.getElementById('remaincommonfrags').innerText = '已消耗:' + c1 + ' 還需要:' + (all_common_frags - c1);
 
             // 儲存數據到 localStorage
             localStorage.setItem('skillLevel', skillLevel);
