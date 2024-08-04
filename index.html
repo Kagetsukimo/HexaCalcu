@@ -62,8 +62,32 @@
     <div class="container">
         <h1>六轉碎片進度計算機</h1>
         <div class="form-group">
+            <label for="jobSelect">職業</label>
+            <select id="jobSelect" onchange="updateSkills()">
+                <script>
+                    var jobs = ['英雄','聖騎士','黑騎士',
+                        '火毒大魔導士','冰雷大魔導士','主教',
+                        '箭神','神射手','開拓者',
+                        '夜使者','暗影神偷','影武者',
+                        '拳霸','槍神','重砲指揮官',
+                        '米哈逸','聖魂劍士','烈焰巫師','破風使者','暗夜行者','閃雷悍將',
+                        '惡魔殺手','惡魔復仇者','爆拳槍神','煉獄巫師','狂豹獵人','傑諾','機甲戰神',
+                        '狂狼勇士','龍魔導士','夜光','精靈遊俠','幻影俠盜','隱月',
+                        '凱撒','凱殷','卡蒂娜','天使破壞者',
+                        '阿戴爾','伊利恩','卡莉','亞克',
+                        '劍豪','陰陽師',
+                        '菈菈','虎影',
+                        '墨玄','琳恩','神之子','凱內西斯'
+                    ];
+                    for (let jobSelect of jobs) {
+                    document.write(`<option value="${jobSelect}">${jobSelect}</option>`);
+                }
+                </script>
+            </select>
+        </div>
+        <div class="form-group">
             <div>
-                <input type="text" id="skillLabel" value="技能核心" style="width: 100px;">
+                <label id="skillLabel">技能核心</label>
             </div>
             <select id="skillLevel">
                 <script>
@@ -75,7 +99,7 @@
         </div>
         <div class="form-group">
             <div>
-                <input type="text" id="masterLabel1" value="精通核心1" style="width: 100px;">
+                <label id="masterLabel1">精通核心1</label>
             </div>
             <select id="masterLevel1">
                 <script>
@@ -87,7 +111,7 @@
         </div>
         <div class="form-group">
             <div>
-                <input type="text" id="masterLabel2" value="精通核心2" style="width: 100px;">
+                <label id="masterLabel2">精通核心2</label>
             </div>
             <select id="masterLevel2">
                 <script>
@@ -99,7 +123,7 @@
         </div>
         <div class="form-group">
             <div>
-                <input type="text" id="enhanceLabel1" value="強化核心1" style="width: 100px;">
+                <label id="enhanceLabel1">強化核心1</label>
             </div>
             <select id="enhancementLevel1">
                 <script>
@@ -111,7 +135,7 @@
         </div>
         <div class="form-group">
             <div>
-                <input type="text" id="enhanceLabel2" value="強化核心2" style="width: 100px;">
+                <label id="enhanceLabel2">強化核心2</label>
             </div>
             <select id="enhancementLevel2">
                 <script>
@@ -123,7 +147,7 @@
         </div>
         <div class="form-group">
             <div>
-                <input type="text" id="enhanceLabel3" value="強化核心3" style="width: 100px;">
+                <label id="enhanceLabel3">強化核心3</label>
             </div>
             <select id="enhancementLevel3">
                 <script>
@@ -135,7 +159,7 @@
         </div>
         <div class="form-group">
             <div>
-                <input type="text" id="enhanceLabel4" value="強化核心4" style="width: 100px;">
+                <label id="enhanceLabel4">強化核心4</label>
             </div>
             <select id="enhancementLevel4">
                 <script>
@@ -146,9 +170,7 @@
             </select>
         </div>
         <div class="form-group">
-            <div>
-                <input type="text" id="commonLabel" value="靈魂雅努斯" style="width: 100px;">
-            </div>
+            <label for="commonLevel">靈魂雅努斯</label>
             <select id="commonLevel">
                 <script>
                     for (let i = 0; i <= 30; i++) {
@@ -166,7 +188,7 @@
             <input type="checkbox" id="dungeonCompleted">
         </div>
         <div class="form-group">
-            <label for="dungeonRewards">副本獎勳</label>
+            <label for="dungeonRewards">副本獎勵</label>
             <select id="dungeonRewards">
                 <option value="0">免費</option>
                 <option value="200">200楓點</option>
@@ -185,6 +207,80 @@
         </div>
     </div>
     <script>
+        //全職業技能精通強化
+        var jobsSkills = {
+            '選擇職業' : ['技能核心','精通核心1','精通核心2','強化核心1','強化核心2','強化核心3','強化核心4'],
+            '英雄' : ['靈魂聖劍','狂暴攻擊VI','憤怒爆發VI','燃燒靈魂之劍','空間斬','鬥氣本能','劍之幻象'],
+            '聖騎士' : ['聖域展開','騎士衝擊波VI','神聖衝擊VI','神聖團結','祝福之鎚','聖十字架','雷神戰鎚'],
+            '黑騎士' : ['滅世永恆之槍','岡格尼爾之擊VI','暗炎斬連殺VI','斷罪之槍','闇靈衝擊','槍刺旋風','黑暗靈氣'],
+            '火毒大魔導士' : ['劇毒煉獄','火焰之襲VI','地獄爆發VI','持續制裁者','劇毒新星','火炎神之怒號','劇毒連鎖'],
+            '冰雷大魔導士' : ['殛凍領域','閃電連擊VI','冰鋒刃VI','冰河紀元','落雷凝聚','冰雪之精神','眾神之雷'],
+            '主教' : ['天堂神罰','天使之箭VI','核爆術VI','聖靈祈禱','天秤之使','和平使者','神之懲罰'],
+            '箭神' : ['箭影紛飛','暴風神射VI','箭座VI','箭雨','殘影之矢','焰箭齊發','殘影幻象'],
+            '神射手' : ['裂空狙擊','必殺狙擊VI','光速神弩VI','真必殺狙擊','分裂之矢','能量弩矢','連射十字弓砲彈'],
+            '開拓者' : ['忘卻遺跡','基本爆破VI','基本釋放VI','究極炸裂','渡鴉風暴','黑曜石屏障','遺跡解放'],
+            '夜使者' : ['禁咒之符','四飛閃VI','刺客刻印VI','散式投擲','風魔手裏劍','達克魯的密傳','飛閃起爆符'],
+            '暗影神偷' : ['一刀兩斷','致命暗殺VI','楓幣炸彈VI','滅殺刃影','黑影切斷','音速狂襲','滅鬼斬靈陣'],
+            '影武者' : ['無盡阿修羅','幻影箭VI','修羅VI','暴風刃','炎獄修羅斬','疾刃颶風','幽靈之刃'],
+            '拳霸' : ['海龍霸拳','閃連殺VI','海龍VI','海之霸主','海龍螺旋','海龍衝鋒','海龍正拳'],
+            '槍神' : ['非常召集','瞬‧迅雷VI','海盜砲擊艇VI','槍彈盛宴','死亡之眼','鯨魚號突擊','死亡板機'],
+            '重砲指揮官' : ['究極炸裂加農砲','加農砲連擊VI','加農砲火箭VI','超級巨型加農砲彈','ICBM','特種猴子部隊','精準轟炸'],
+            '米哈逸' : ['輝煌聖劍','閃光交叉VI','皇家之盾VI','熾天覆七重圓環','光輝聖劍','魂光劍擊','光之勇氣'],
+            '聖魂劍士' : ['銀河星爆','烈日狂斬VI','宇宙轟炸VI','宇宙','極樂之境','靈魂蝕日','閃焰重擊'],
+            '烈焰巫師' : ['永恆鳳炎','元素之炎VI','極致熾烈VI','炙熱元素之炎','裂炎爆發','無盡之炎燄','火蜥蜴的惡作劇'],
+            '破風使者' : ['風之聖諭','天空之歌VI','風妖精之箭VI','狂風呼嘯','風轉奇想','西爾芙之壁','漩渦巨球'],
+            '暗夜行者' : ['靜謐之夜','五連投擲VI','飢餓蝙蝠VI','影之槍','闇影侍從','闇影吞噬','闇影投擲'],
+            '閃雷悍將' : ['浪馳雷掣','消滅VI','霹靂VI','神雷合一','巨鯊狂浪','雷神槍擊','槍雷連擊'],
+            '惡魔殺手' : ['夢魘魔域','惡魔衝擊VI','惡魔狂斬VI','惡魔覺醒','耶夢加得','奧爾特羅斯','惡魔毀滅'],
+            '惡魔復仇者' : ['魔劍鎮魂曲','盾牌追擊VI','逆十文字斬VI','惡魔狂亂','血腥盛宴','次元之刃','亡靈'],
+            '爆拳槍神' : ['星殞重拳','連發重擊VI','釋能衝擊堆VI','毀滅左輪','火神重擊','燃燒破壞者','殘影衝擊'],
+            '煉獄巫師' : ['緋紅契約','死神VI','終極攻擊VI','聯盟繩索','黑魔祭壇','冥界死神','深淵閃電'],
+            '狂豹獵人' : ['絕對美洲豹時間','狂野帕爾坎VI','豹技能VI','美洲豹風暴','豹魂嵐擊','狂暴榴彈','狂野機關炮T-X'],
+            '傑諾' : ['人工進化','偽裝掃蕩VI','三角列陣VI','滅世雷射光','超載模式','能量領域‧融合','光子射線'],
+            '機甲戰神' : ['原爆點','巨型火炮VI','追蹤飛彈VI','多重屬性:M-FL','微型導彈箱','火力全開','巨型航母'],
+            '狂狼勇士' : ['鬥破山河','比耀德VI','目標鎖定VI','瑪哈之疾','揮動瑪哈','芬里爾墜擊','極冰風暴'],
+            '龍魔導士' : ['龍星群','魔力之環VI','閃雷之環VI','元素滅殺破','聖龍突襲','星宮射線','魔力之旋'],
+            '夜光' : ['創世紀','絕對擊殺VI','極速反射VI','真理之門','混沌共鳴','光與暗的洗禮','解放寶珠'],
+            '精靈遊俠' : ['不朽榮光','伊修塔爾之環VI','憤怒天使VI','元素精靈','西皮迪亞','伊里加爾的氣息','皇家騎士'],
+            '幻影俠盜' : ['命運詠嘆調','卡牌風暴VI','連犽突進VI','命運鬼牌','黑傑克','幻影標記','間隙破壞'],
+            '隱月' : ['狐神附體','鬼斬VI','靈魂帳幕VI','精靈聚集','鬼武陣','真鬼斬','破碎連拳'],
+            '凱撒' : ['不滅凱撒抑制','藍焰恐懼VI','意志之劍VI','超新星守護者','重磅出極','天龍恐懼','龍焰合一'],
+            '凱殷' : ['惡意主宰','破塵箭VI','衝擊箭VI','[具現]龍之爆裂','[處刑]致命奇襲','死亡降臨','掌握痛苦'],
+            '卡蒂娜' : ['鏈之藝術:屠殺','鞭擊VI','武器變換VI','鏈之藝術:護佑','召喚:A.D大砲','鏈之藝術:漩渦','武器變換終章'],
+            '天使破壞者' : ['完美落幕','三位一體VI','靈魂探求者VI','能量爆炸','聚光燈','小萌新吉祥物','三位一體融合'],
+            '阿戴爾' : ['無限劍制','切割VI','追蹤VI','毀滅','無限','復原','乙太風暴'],
+            '伊利恩' : ['無垠水晶','暗器VI','致命龍劍風VI','水晶燃燒','神怒寶劍','靈魂水晶','水晶之門'],
+            '卡莉' : ['魔咒:沙塵暴','藝術:亂舞VI','虛空衝刺VI','魔咒:毀滅','虛空破滅','藝術:阿斯特拉','共鳴:最後通牒'],
+            '亞克' : ['亙古凝視的深淵','雷普技能VI','侵蝕技能VI','根源的記憶','無限技能','滲出的噩夢/凶夢','無限飢餓的猛獸'],
+            '劍豪' : ['終焉之須佐能乎','拔刀術-雷VI','神速無雙VI','嘯月光斬','嘯月五影劍','曉月流極義=劍神','剎那斬擊'],
+            '陰陽師' : ['十尾妖狐的羈絆','紫扇仰波VI','破邪連擊符VI','雪女召喚','靈石召喚','怨靈解放陣','大鬼封魂陣'],
+            '菈菈' : ['花花綠綠大草原','精氣散播VI','龍脈釋放VI','大大的舒展','日江山風','翻騰的精氣','蜿蜒的山脊'],
+            '虎影' : ['開天闢地','金箍棒VI','如意扇VI','極大分身亂舞','山靈召喚','降臨怪力亂神','天地人幻影'],
+            '墨玄' : ['絕技:破荒拳','玄山:招式展開VI','神功:亂打連拳VI','絕技:玄天拳','絕技:無我之境','絕技:暴技','神功:泰山擊'],
+            '琳恩' : ['森林守護者','重創VI','暗襲VI','無情掠擊','蒼空追擊','[集中]覺醒','自然的恩典'],
+            '神之子' : ['時之境界','狂風千刃VI','旋風急轉彎VI','終焉之時','協力攻擊','暗影瞬閃','自主武器'],
+            '凱內西斯' : ['將軍','梅泰利爾VI','擷取心靈VI','心靈龍捲風','終極-移動物質','終極:心靈彈丸','引力法則'],
+        }
+        
+        function updateSkills() {
+            var skillLabel = document.getElementById('skillLabel').value;
+            var masterLabel1 = document.getElementById('masterLabel1').value;
+            var masterLabel2 = document.getElementById('masterLabel2').value;
+            var enhanceLabel1 = document.getElementById('enhanceLabel1').value;
+            var enhanceLabel2 = document.getElementById('enhanceLabel2').value;
+            var enhanceLabel3 = document.getElementById('enhanceLabel3').value;
+            var enhanceLabel4 = document.getElementById('enhanceLabel4').value;
+            var jobSelect = document.getElementById('jobSelect').value;
+            var skillLabels = jobsSkills[jobSelect] || ['技能核心','精通核心1','精通核心2','強化核心1','強化核心2','強化核心3','強化核心4'];
+
+            document.getElementById('skillLabel').innerText = skillLabels[0] || '技能核心';
+            document.getElementById('masterLabel1').innerText = skillLabels[1] || '精通核心1';
+            document.getElementById('masterLabel2').innerText = skillLabels[2] || '精通核心2';
+            document.getElementById('enhanceLabel1').innerText = skillLabels[3] || '強化核心1';
+            document.getElementById('enhanceLabel2').innerText = skillLabels[4] || '強化核心2';
+            document.getElementById('enhanceLabel3').innerText = skillLabels[5] || '強化核心3';
+            document.getElementById('enhanceLabel4').innerText = skillLabels[6] || '強化核心4';
+        }
         function calculate() {
             //核心每級所需
             var skillLevelArr = [0, 30, 35, 40, 45, 50, 55, 60, 65, 200, 80, 90, 100, 110, 120, 130, 140, 150, 160, 350, 170, 180, 190, 200, 210, 220, 230, 240, 250, 500, 0];
@@ -208,14 +304,8 @@
             var enhancementLevel4 = parseInt(document.getElementById('enhancementLevel4').value) || 0;
             var commonLevel = parseInt(document.getElementById('commonLevel').value) || 0;
             var remainFragments = parseInt(document.getElementById('remainFragments').value) || 0;
-            var skillLabel = document.getElementById('skillLabel').value;
-            var masterLabel1 = document.getElementById('masterLabel1').value;
-            var masterLabel2 = document.getElementById('masterLabel2').value;
-            var enhanceLabel1 = document.getElementById('enhanceLabel1').value;
-            var enhanceLabel2 = document.getElementById('enhanceLabel2').value;
-            var enhanceLabel3 = document.getElementById('enhanceLabel3').value;
-            var enhanceLabel4 = document.getElementById('enhanceLabel4').value;
-            var commonLabel = document.getElementById('commonLabel').value;
+            var jobSelect = document.getElementById('jobSelect').value;
+            
             //副本完成狀況與種類
             var nowDungeon = document.getElementById('dungeonCompleted').checked;
             var dungeonRewards = parseInt(document.getElementById('dungeonRewards').value);
@@ -234,6 +324,7 @@
             var noCommonCurrentConsumed = s1 + m1 + m2 + e1 + e2 + e3 + e4 + currentLevel[8];
             var needFrag         = allFrag - currentConsumed;
             var noCommonNeedFrag = noCommonAllFrag - noCommonCurrentConsumed;
+            
             //獲取當天星期,每日、每周、副本獲得量
             var now = new Date();
             var hnowWeekday = now.getDay();
@@ -342,17 +433,10 @@
             localStorage.setItem('enhancementLevel3', enhancementLevel3);
             localStorage.setItem('enhancementLevel4', enhancementLevel4);
             localStorage.setItem('commonLevel', commonLevel);
-            localStorage.setItem('skillLabel',skillLabel)
-            localStorage.setItem('masterLabel1', masterLabel1);
-            localStorage.setItem('masterLabel2', masterLabel2);
-            localStorage.setItem('enhanceLabel1', enhanceLabel1);
-            localStorage.setItem('enhanceLabel2', enhanceLabel2);
-            localStorage.setItem('enhanceLabel3', enhanceLabel3);
-            localStorage.setItem('enhanceLabel4', enhanceLabel4);
-            localStorage.setItem('commonLabel', commonLabel);
             localStorage.setItem('remainFragments', remainFragments);
             localStorage.setItem('dungeonCompleted', dungeonCompleted);
             localStorage.setItem('dungeonRewards', dungeonRewards);
+            localStorage.setItem('jobSelect',jobSelect);
         }
         //當頁面加載時讀取 localStorage
         window.onload = function() {
@@ -364,20 +448,14 @@
             document.getElementById('enhancementLevel3').value = localStorage.getItem('enhancementLevel3') || 0;
             document.getElementById('enhancementLevel4').value = localStorage.getItem('enhancementLevel4') || 0;
             document.getElementById('commonLevel').value = localStorage.getItem('commonLevel') || 0;
-            document.getElementById('skillLabel').value = localStorage.getItem('skillLabel') || '技能核心';
-            document.getElementById('masterLabel1').value = localStorage.getItem('masterLabel1') || '精通核心1';
-            document.getElementById('masterLabel2').value = localStorage.getItem('masterLabel2') || '精通核心2';
-            document.getElementById('enhanceLabel1').value = localStorage.getItem('enhanceLabel1') || '強化核心1';
-            document.getElementById('enhanceLabel2').value = localStorage.getItem('enhanceLabel2') || '強化核心1';
-            document.getElementById('enhanceLabel3').value = localStorage.getItem('enhanceLabel3') || '強化核心1';
-            document.getElementById('enhanceLabel4').value = localStorage.getItem('enhanceLabel4') || '強化核心1';
-            document.getElementById('commonLabel').value = localStorage.getItem('commonLabel') || '靈魂雅努斯';
             document.getElementById('remainFragments').value = localStorage.getItem('remainFragments') || 0;
             document.getElementById('dungeonCompleted').checked = localStorage.getItem('dungeonCompleted') === 'true';
             document.getElementById('dungeonRewards').value = localStorage.getItem('dungeonRewards') || 0;
+            document.getElementById('jobSelect').value = localStorage.getItem('jobSelect');
             
             // 重新計算以顯示保存的結果
             calculate();
+            updateSkills();
         }
     </script>
 </body>
