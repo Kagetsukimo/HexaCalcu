@@ -89,6 +89,9 @@
             <div>
                 <label id="skillLabel">技能核心</label>
             </div>
+            <div>
+                <label id="remainskillfrags"></label>
+            </div>
             <select id="skillLevel">
                 <script>
                     for (let i = 0; i <= 30; i++) {
@@ -100,6 +103,9 @@
         <div class="form-group">
             <div>
                 <label id="masterLabel1">精通核心1</label>
+            </div>
+            <div>
+                <label id="remainmasterfrags1"></label>
             </div>
             <select id="masterLevel1">
                 <script>
@@ -113,6 +119,9 @@
             <div>
                 <label id="masterLabel2">精通核心2</label>
             </div>
+            <div>
+                <label id="remainmasterfrags2"></label>
+            </div>
             <select id="masterLevel2">
                 <script>
                     for (let i = 0; i <= 30; i++) {
@@ -124,6 +133,9 @@
         <div class="form-group">
             <div>
                 <label id="enhanceLabel1">強化核心1</label>
+            </div>
+            <div>
+                <label id="remainenhancefrags1"></label>
             </div>
             <select id="enhancementLevel1">
                 <script>
@@ -137,6 +149,9 @@
             <div>
                 <label id="enhanceLabel2">強化核心2</label>
             </div>
+            <div>
+                <label id="remainenhancefrags2"></label>
+            </div>
             <select id="enhancementLevel2">
                 <script>
                     for (let i = 0; i <= 30; i++) {
@@ -149,6 +164,9 @@
             <div>
                 <label id="enhanceLabel3">強化核心3</label>
             </div>
+            <div>
+                <label id="remainenhancefrags3"></label>
+            </div>
             <select id="enhancementLevel3">
                 <script>
                     for (let i = 0; i <= 30; i++) {
@@ -160,6 +178,9 @@
         <div class="form-group">
             <div>
                 <label id="enhanceLabel4">強化核心4</label>
+            </div>
+            <div>
+                <label id="remainenhancefrags4"></label>
             </div>
             <select id="enhancementLevel4">
                 <script>
@@ -303,6 +324,13 @@
             var enhancementLevel3 = parseInt(document.getElementById('enhancementLevel3').value) || 0;
             var enhancementLevel4 = parseInt(document.getElementById('enhancementLevel4').value) || 0;
             var commonLevel = parseInt(document.getElementById('commonLevel').value) || 0;
+            var remainskillfrags = document.getElementById('remainskillfrags').value;
+            var remainmasterfrags1 = document.getElementById('remainmasterfrags1').value;
+            var remainmasterfrags2 = document.getElementById('remainmasterfrags2').value;
+            var remainenhancefrags1 = document.getElementById('remainenhancefrags1').value;
+            var remainenhancefrags2 = document.getElementById('remainenhancefrags2').value;
+            var remainenhancefrags3 = document.getElementById('remainenhancefrags3').value;
+            var remainenhancefrags4 = document.getElementById('remainenhancefrags4').value;
             var remainFragments = parseInt(document.getElementById('remainFragments').value) || 0;
             var jobSelect = document.getElementById('jobSelect').value;
             
@@ -423,6 +451,13 @@
             document.getElementById('noCommonNeedFragsLabel').innerText = noCommonNeedFrag;
             document.getElementById('noCommonFragsProgressLabel').innerText = ((noCommonCurrentConsumed / noCommonAllFrag) * 100).toFixed(2) + '%';
             document.getElementById('noCommonRemainDaysLabel').innerText = noCommonDaysNeeded;
+            document.getElementById('remainskillfrags').innerText = '已消耗:' + s1 + ' 還需要:' + (all_skill_frags - s1);
+            document.getElementById('remainmasterfrags1').innerText = '已消耗:' + m1 + ' 還需要:' + (all_master_frags - m1);
+            document.getElementById('remainmasterfrags2').innerText = '已消耗:' + m2 + ' 還需要:' + (all_master_frags - m2);
+            document.getElementById('remainenhancefrags1').innerText = '已消耗:' + e1 + ' 還需要:' + (all_enhance_frags - e1);
+            document.getElementById('remainenhancefrags2').innerText = '已消耗:' + e2 + ' 還需要:' + (all_enhance_frags - e2);
+            document.getElementById('remainenhancefrags3').innerText = '已消耗:' + e3 + ' 還需要:' + (all_enhance_frags - e3);
+            document.getElementById('remainenhancefrags4').innerText = '已消耗:' + e4 + ' 還需要:' + (all_enhance_frags - e4);
 
             // 儲存數據到 localStorage
             localStorage.setItem('skillLevel', skillLevel);
