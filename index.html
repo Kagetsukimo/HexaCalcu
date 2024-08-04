@@ -62,7 +62,9 @@
     <div class="container">
         <h1>六轉碎片進度計算機</h1>
         <div class="form-group">
-            <label for="skillLevel">技能核心</label>
+            <div>
+                <input type="text" id="skillLabel" value="技能核心" style="width: 100px;">
+            </div>
             <select id="skillLevel">
                 <script>
                     for (let i = 0; i <= 30; i++) {
@@ -72,7 +74,9 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="masterLevel1">精通核心1</label>
+            <div>
+                <input type="text" id="masterLabel1" value="精通核心1" style="width: 100px;">
+            </div>
             <select id="masterLevel1">
                 <script>
                     for (let i = 0; i <= 30; i++) {
@@ -82,7 +86,9 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="masterLevel2">精通核心2</label>
+            <div>
+                <input type="text" id="masterLabel2" value="精通核心2" style="width: 100px;">
+            </div>
             <select id="masterLevel2">
                 <script>
                     for (let i = 0; i <= 30; i++) {
@@ -92,7 +98,9 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="enhancementLevel1">強化核心1</label>
+            <div>
+                <input type="text" id="enhanceLabel1" value="強化核心1" style="width: 100px;">
+            </div>
             <select id="enhancementLevel1">
                 <script>
                     for (let i = 0; i <= 30; i++) {
@@ -102,7 +110,9 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="enhancementLevel2">強化核心2</label>
+            <div>
+                <input type="text" id="enhanceLabel2" value="強化核心2" style="width: 100px;">
+            </div>
             <select id="enhancementLevel2">
                 <script>
                     for (let i = 0; i <= 30; i++) {
@@ -112,7 +122,9 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="enhancementLevel3">強化核心3</label>
+            <div>
+                <input type="text" id="enhanceLabel3" value="強化核心3" style="width: 100px;">
+            </div>
             <select id="enhancementLevel3">
                 <script>
                     for (let i = 0; i <= 30; i++) {
@@ -122,7 +134,9 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="enhancementLevel4">強化核心4</label>
+            <div>
+                <input type="text" id="enhanceLabel4" value="強化核心4" style="width: 100px;">
+            </div>
             <select id="enhancementLevel4">
                 <script>
                     for (let i = 0; i <= 30; i++) {
@@ -132,7 +146,9 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="commonLevel">共用核心</label>
+            <div>
+                <input type="text" id="commonLabel" value="靈魂雅努斯" style="width: 100px;">
+            </div>
             <select id="commonLevel">
                 <script>
                     for (let i = 0; i <= 30; i++) {
@@ -192,6 +208,14 @@
             var enhancementLevel4 = parseInt(document.getElementById('enhancementLevel4').value) || 0;
             var commonLevel = parseInt(document.getElementById('commonLevel').value) || 0;
             var remainFragments = parseInt(document.getElementById('remainFragments').value) || 0;
+            var skillLabel = document.getElementById('skillLabel').value;
+            var masterLabel1 = document.getElementById('masterLabel1').value;
+            var masterLabel2 = document.getElementById('masterLabel2').value;
+            var enhanceLabel1 = document.getElementById('enhanceLabel1').value;
+            var enhanceLabel2 = document.getElementById('enhanceLabel2').value;
+            var enhanceLabel3 = document.getElementById('enhanceLabel3').value;
+            var enhanceLabel4 = document.getElementById('enhanceLabel4').value;
+            var commonLabel = document.getElementById('commonLabel').value;
             //副本完成狀況與種類
             var nowDungeon = document.getElementById('dungeonCompleted').checked;
             var dungeonRewards = parseInt(document.getElementById('dungeonRewards').value);
@@ -318,6 +342,14 @@
             localStorage.setItem('enhancementLevel3', enhancementLevel3);
             localStorage.setItem('enhancementLevel4', enhancementLevel4);
             localStorage.setItem('commonLevel', commonLevel);
+            localStorage.setItem('skillLabel',skillLabel)
+            localStorage.setItem('masterLabel1', masterLabel1);
+            localStorage.setItem('masterLabel2', masterLabel2);
+            localStorage.setItem('enhanceLabel1', enhanceLabel1);
+            localStorage.setItem('enhanceLabel2', enhanceLabel2);
+            localStorage.setItem('enhanceLabel3', enhanceLabel3);
+            localStorage.setItem('enhanceLabel4', enhanceLabel4);
+            localStorage.setItem('commonLabel', commonLabel);
             localStorage.setItem('remainFragments', remainFragments);
             localStorage.setItem('dungeonCompleted', dungeonCompleted);
             localStorage.setItem('dungeonRewards', dungeonRewards);
@@ -332,6 +364,14 @@
             document.getElementById('enhancementLevel3').value = localStorage.getItem('enhancementLevel3') || 0;
             document.getElementById('enhancementLevel4').value = localStorage.getItem('enhancementLevel4') || 0;
             document.getElementById('commonLevel').value = localStorage.getItem('commonLevel') || 0;
+            document.getElementById('skillLabel').value = localStorage.getItem('skillLabel') || '技能核心';
+            document.getElementById('masterLabel1').value = localStorage.getItem('masterLabel1') || '精通核心1';
+            document.getElementById('masterLabel2').value = localStorage.getItem('masterLabel2') || '精通核心2';
+            document.getElementById('enhanceLabel1').value = localStorage.getItem('enhanceLabel1') || '強化核心1';
+            document.getElementById('enhanceLabel2').value = localStorage.getItem('enhanceLabel2') || '強化核心1';
+            document.getElementById('enhanceLabel3').value = localStorage.getItem('enhanceLabel3') || '強化核心1';
+            document.getElementById('enhanceLabel4').value = localStorage.getItem('enhanceLabel4') || '強化核心1';
+            document.getElementById('commonLabel').value = localStorage.getItem('commonLabel') || '靈魂雅努斯';
             document.getElementById('remainFragments').value = localStorage.getItem('remainFragments') || 0;
             document.getElementById('dungeonCompleted').checked = localStorage.getItem('dungeonCompleted') === 'true';
             document.getElementById('dungeonRewards').value = localStorage.getItem('dungeonRewards') || 0;
