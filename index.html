@@ -316,6 +316,7 @@
         <div class="form-group">
             <label for="dungeonRewards">副本獎勵</label>
             <select id="dungeonRewards" class="reward-select">
+                <option value="-1">沒打</option>
                 <option value="0">免費</option>
                 <option value="200">200楓點</option>
                 <option value="360">360楓點</option>
@@ -505,8 +506,10 @@
             var daysNeeded = 0;
             var dailyfrag = 12;
             var weeeklyfrag = 50;
-            var dungeonfrag = 30;
-            if (dungeonRewards == 0) {
+            var dungeonfrag = 0;
+            if(dungeonRewards == -1){
+                dungeonfrag = 0;
+            }else if (dungeonRewards == 0) {
                 dungeonfrag = 30;
             } else if (dungeonRewards == 200) {
                 dungeonfrag = 60;
