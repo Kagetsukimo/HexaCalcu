@@ -830,6 +830,9 @@
                     objectSoulCollected++;
                 }
             }
+            if(consumedSoul >= allSoul){
+                needSoul = 0;
+            }
             //更新結果
             document.getElementById('remainskillfrags').innerText ='已消耗:'+s1s+'/'+s1+'\n共還需:'+(all_skill_soul-s1s)+'/'+(all_skill_frags - s1)+' 目標還需:'+objectNeedSouls[0]+'/'+objectNeedFrags[0];
             document.getElementById('remainmasterfrags1').innerText ='已消耗:'+m1s+'/'+m1+'\n共還需:'+(all_master_soul-m1s)+'/'+(all_master_frags-m1)+' 目標還需:'+objectNeedSouls[1]+'/'+objectNeedFrags[1];
