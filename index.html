@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>六轉進度計算機</title>
+    <title>六轉碎片計算機</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -74,14 +74,26 @@
             position: absolute;
             right: 2px;
         }
-        .form-group input {
+        .inputone {
+            position: absolute;
+            text-align: center;
             width: 80px;
             padding: 5px;
-        }
-        .form-group input {
-            text-align: center;
-            position: absolute;
             right: 0;
+        }
+        .level-input{
+            position: absolute;
+            text-align: center;
+            width: 48px;
+            padding: 4px;
+            right: 82px;
+        }
+        .object-input{
+            position: absolute;
+            text-align: center;
+            width: 48px;
+            padding: 4px;
+            right: 2px;
         }
         .soul-label{
             position: absolute;
@@ -97,11 +109,13 @@
             position: absolute;
             right: 82px;
             width: 60px;
+            text-align: center;
         }
         .souls-select{
             position: absolute;
             right: 2px;
             width: 60px;
+            text-align: center;
         }
         .btn {
             background-color: #4CAF50;
@@ -115,10 +129,26 @@
         .btn:hover {
             background-color: #45a049;
         }
+        .rebtn{
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .rebtn:hover {
+            background-color: #45a049;
+        }
         .result {
             font-weight: bold;
             width: 200px;
             display: inline-block; /* 使寬度設定生效 */
+            text-align: left; /* 讓文本左對齊 */
+        }
+        .result-text{
+            font-weight: bold;
             text-align: left; /* 讓文本左對齊 */
         }
     </style>
@@ -130,7 +160,7 @@
             <label>職業</label>
             <select id="jobSelect" class="job-select" onchange="updateSkills()">
                 <script>
-                    var jobs = ['英雄','聖騎士','黑騎士',
+                    var jobs = ['選擇職業','英雄','聖騎士','黑騎士',
                         '火毒大魔導士','冰雷大魔導士','主教',
                         '箭神','神射手','開拓者',
                         '夜使者','暗影神偷','影武者',
@@ -146,7 +176,7 @@
                     ];
                     for (let jobSelect of jobs) {
                     document.write(`<option value="${jobSelect}">${jobSelect}</option>`);
-                }
+                    }
                 </script>
             </select>
         </div>
@@ -161,20 +191,8 @@
             <div>
                 <label class="needfrag-label" id="remainskillfrags"></label>
             </div>
-            <select id="skillLevel" class="level-select">
-                <script>
-                    for (let i = 1; i <= 30; i++) {
-                        document.write(`<option value="${i}">${i}</option>`);
-                    }
-                </script>
-            </select>
-            <select id="objectskillLevel" class="object-select">
-                <script>
-                    for (let i = 1; i <= 30; i++) {
-                        document.write(`<option value="${i}">${i}</option>`);
-                    }
-                </script>
-            </select>
+                <input id="skillLevel" class="level-input" type="number" min="0" max="30" step="1" required>
+                <input id="objectskillLevel" class="object-input" type="number" min="0" max="30" step="1" required>
         </div>
         <div class="form-group">
             <div>
@@ -183,20 +201,8 @@
             <div>
                 <label class="needfrag-label" id="remainmasterfrags1"></label>
             </div>
-            <select id="masterLevel1" class="level-select">
-                <script>
-                    for (let i = 0; i <= 30; i++) {
-                        document.write(`<option value="${i}">${i}</option>`);
-                    }
-                </script>
-            </select>
-            <select id="objectmasterLevel1" class="object-select">
-                <script>
-                    for (let i = 0; i <= 30; i++) {
-                        document.write(`<option value="${i}">${i}</option>`);
-                    }
-                </script>
-            </select>
+            <input id="masterLevel1" class="level-input" type="number" min="0" max="30" step="1" required>
+            <input id="objectmasterLevel1" class="object-input" type="number" min="0" max="30" step="1" required>
         </div>
         <div class="form-group">
             <div>
@@ -205,20 +211,8 @@
             <div>
                 <label class="needfrag-label" id="remainmasterfrags2"></label>
             </div>
-            <select id="masterLevel2" class="level-select">
-                <script>
-                    for (let i = 0; i <= 30; i++) {
-                        document.write(`<option value="${i}">${i}</option>`);
-                    }
-                </script>
-            </select>
-            <select id="objectmasterLevel2" class="object-select">
-                <script>
-                    for (let i = 0; i <= 30; i++) {
-                        document.write(`<option value="${i}">${i}</option>`);
-                    }
-                </script>
-            </select>
+            <input id="masterLevel2" class="level-input" type="number" min="0" max="30" step="1" required>
+            <input id="objectmasterLevel2" class="object-input" type="number" min="0" max="30" step="1" required>
         </div>
         <div class="form-group">
             <div>
@@ -227,20 +221,8 @@
             <div>
                 <label class="needfrag-label" id="remainenhancefrags1"></label>
             </div>
-            <select id="enhancementLevel1" class="level-select">
-                <script>
-                    for (let i = 0; i <= 30; i++) {
-                        document.write(`<option value="${i}">${i}</option>`);
-                    }
-                </script>
-            </select>
-            <select id="objectenhancementLevel1" class="object-select">
-                <script>
-                    for (let i = 0; i <= 30; i++) {
-                        document.write(`<option value="${i}">${i}</option>`);
-                    }
-                </script>
-            </select>
+            <input id="enhancementLevel1" class="level-input" type="number" min="0" max="30" step="1" required>
+            <input id="objectenhancementLevel1" class="object-input" type="number" min="0" max="30" step="1" required>
         </div>
         <div class="form-group">
             <div>
@@ -249,20 +231,8 @@
             <div>
                 <label class="needfrag-label" id="remainenhancefrags2"></label>
             </div>
-            <select id="enhancementLevel2" class="level-select">
-                <script>
-                    for (let i = 0; i <= 30; i++) {
-                        document.write(`<option value="${i}">${i}</option>`);
-                    }
-                </script>
-            </select>
-            <select id="objectenhancementLevel2" class="object-select">
-                <script>
-                    for (let i = 0; i <= 30; i++) {
-                        document.write(`<option value="${i}">${i}</option>`);
-                    }
-                </script>
-            </select>
+            <input id="enhancementLevel2" class="level-input" type="number" min="0" max="30" step="1" required>
+            <input id="objectenhancementLevel2" class="object-input" type="number" min="0" max="30" step="1" required>
         </div>
         <div class="form-group">
             <div>
@@ -271,20 +241,8 @@
             <div>
                 <label class="needfrag-label" id="remainenhancefrags3"></label>
             </div>
-            <select id="enhancementLevel3" class="level-select">
-                <script>
-                    for (let i = 0; i <= 30; i++) {
-                        document.write(`<option value="${i}">${i}</option>`);
-                    }
-                </script>
-            </select>
-            <select id="objectenhancementLevel3" class="object-select">
-                <script>
-                    for (let i = 0; i <= 30; i++) {
-                        document.write(`<option value="${i}">${i}</option>`);
-                    }
-                </script>
-            </select>
+            <input id="enhancementLevel3" class="level-input" type="number" min="0" max="30" step="1" required>
+            <input id="objectenhancementLevel3" class="object-input" type="number" min="0" max="30" step="1" required>
         </div>
         <div class="form-group">
             <div>
@@ -293,20 +251,8 @@
             <div>
                 <label class="needfrag-label" id="remainenhancefrags4"></label>
             </div>
-            <select id="enhancementLevel4" class="level-select">
-                <script>
-                    for (let i = 0; i <= 30; i++) {
-                        document.write(`<option value="${i}">${i}</option>`);
-                    }
-                </script>
-            </select>
-            <select id="objectenhancementLevel4" class="object-select">
-                <script>
-                    for (let i = 0; i <= 30; i++) {
-                        document.write(`<option value="${i}">${i}</option>`);
-                    }
-                </script>
-            </select>
+            <input id="enhancementLevel4" class="level-input" type="number" min="0" max="30" step="1" required>
+            <input id="objectenhancementLevel4" class="object-input" type="number" min="0" max="30" step="1" required>
         </div>
         <div class="form-group">
             <div>
@@ -315,24 +261,12 @@
             <div>
                 <label class="needfrag-label" id="remaincommonfrags"></label>
             </div>
-            <select id="commonLevel" class="level-select">
-                <script>
-                    for (let i = 0; i <= 30; i++) {
-                        document.write(`<option value="${i}">${i}</option>`);
-                    }
-                </script>
-            </select>
-            <select id="objectcommonLevel" class="object-select">
-                <script>
-                    for (let i = 0; i <= 30; i++) {
-                        document.write(`<option value="${i}">${i}</option>`);
-                    }
-                </script>
-            </select>
+            <input id="commonLevel" class="level-input" type="number" min="0" max="30" step="1" required>
+            <input id="objectcommonLevel" class="object-input" type="number" min="0" max="30" step="1" required>
         </div>
         <div class="form-group">
             <label for="remainFragments">剩餘碎片</label>
-            <input type="text" id="remainFragments">
+            <input id="remainFragments" class="inputone" type="number" min="0" step="1" required>
         </div>
         <div class="form-group">
             <label class="soul-label">靈魂</label>
@@ -357,7 +291,7 @@
         </div>
         <div class="form-group">
             <label for="dungeonCompleted">本周副本已打</label>
-            <input type="checkbox" id="dungeonCompleted">
+            <input type="checkbox" class="inputone" id="dungeonCompleted">
         </div>
         <div class="form-group">
             <label for="dungeonRewards">副本獎勵</label>
@@ -402,13 +336,18 @@
         </div>
         <div class="form-group">
             <div class="result">
-                <p>碎片每日天數: <span id="remainDaysLabel">0</span></p>
+                <p>純每日天數: <span id="remainDaysLabel">0</span></p>
             </div>
             <div class="result">
                 <p>不計共用天數: <span id="noCommonRemainDaysLabel">0</span></p>
             </div>
             <div class="result">
                 <p>靈魂每日天數: <span id="soulRemainDaysLabel">0</span></p>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="result-text">
+                <p>進度會計算剩餘碎片以及氣息 目標等級則不計算</p>
             </div>
         </div>
         <div class="form-group">
@@ -429,6 +368,12 @@
                 <p>目標等級靈魂天數: <span id="objectSoulNeedsDays">0</span></p> 
             </div>  
         </div>
+        <div class="form-group">
+            <div class="result-text">
+                <p>重置按鍵會把已儲存的都刪除且還原預設值 沒事不要亂按</p>
+            </div>
+        </div>
+        <button class="rebtn" onclick="reset()">重置</button>
     </div>
     <script>
         //全職業技能精通強化
@@ -548,7 +493,7 @@
             var remainFragments = parseInt(document.getElementById('remainFragments').value) || 0;
             var soul = parseInt(document.getElementById('currentsoul').value) || 0;
             var souls = parseInt(document.getElementById('currentsouls').value) || 0;
-            var jobSelect = document.getElementById('jobSelect').value;
+            var jobSelect = document.getElementById('jobSelect').value || "選擇職業";
             //副本完成狀況與種類
             var nowDungeon = document.getElementById('dungeonCompleted').checked;
             var dungeonRewards = parseInt(document.getElementById('dungeonRewards').value);
@@ -898,22 +843,49 @@
             document.getElementById('enhancementLevel3').value = localStorage.getItem('enhancementLevel3') || 0;
             document.getElementById('enhancementLevel4').value = localStorage.getItem('enhancementLevel4') || 0;
             document.getElementById('commonLevel').value = localStorage.getItem('commonLevel') || 0;
-            document.getElementById('objectskillLevel').value = localStorage.getItem('objectskillLevel');
-            document.getElementById('objectmasterLevel1').value = localStorage.getItem('objectmasterLevel1');
-            document.getElementById('objectmasterLevel2').value = localStorage.getItem('objectmasterLevel2');
-            document.getElementById('objectenhancementLevel1').value = localStorage.getItem('objectenhancementLevel1');
-            document.getElementById('objectenhancementLevel2').value = localStorage.getItem('objectenhancementLevel2');
-            document.getElementById('objectenhancementLevel3').value = localStorage.getItem('objectenhancementLevel3');
-            document.getElementById('objectenhancementLevel4').value = localStorage.getItem('objectenhancementLevel4');
-            document.getElementById('objectcommonLevel').value = localStorage.getItem('objectcommonLevel');
+            document.getElementById('objectskillLevel').value = localStorage.getItem('objectskillLevel') || 1;
+            document.getElementById('objectmasterLevel1').value = localStorage.getItem('objectmasterLevel1') || 0;
+            document.getElementById('objectmasterLevel2').value = localStorage.getItem('objectmasterLevel2') || 0;
+            document.getElementById('objectenhancementLevel1').value = localStorage.getItem('objectenhancementLevel1') || 0;
+            document.getElementById('objectenhancementLevel2').value = localStorage.getItem('objectenhancementLevel2') || 0;
+            document.getElementById('objectenhancementLevel3').value = localStorage.getItem('objectenhancementLevel3') || 0;
+            document.getElementById('objectenhancementLevel4').value = localStorage.getItem('objectenhancementLevel4') || 0;
+            document.getElementById('objectcommonLevel').value = localStorage.getItem('objectcommonLevel') || 0;
             document.getElementById('remainFragments').value = localStorage.getItem('remainFragments') || 0;
             document.getElementById('currentsoul').value = localStorage.getItem('currentsoul') || 0;
             document.getElementById('currentsouls').value = localStorage.getItem('currentsouls') || 0;
             document.getElementById('dungeonCompleted').checked = localStorage.getItem('dungeonCompleted') === 'true';
             document.getElementById('dungeonRewards').value = localStorage.getItem('dungeonRewards') || 0;
-            document.getElementById('jobSelect').value = localStorage.getItem('jobSelect');
+            document.getElementById('jobSelect').value = localStorage.getItem('jobSelect') || "選擇職業";
             
             // 重新計算以顯示保存的結果
+            calculate();
+            updateSkills();
+        }
+        function reset(){
+            document.getElementById('skillLevel').value = 1;
+            document.getElementById('masterLevel1').value = 0;
+            document.getElementById('masterLevel2').value = 0;
+            document.getElementById('enhancementLevel1').value = 0;
+            document.getElementById('enhancementLevel2').value = 0;
+            document.getElementById('enhancementLevel3').value = 0;
+            document.getElementById('enhancementLevel4').value = 0;
+            document.getElementById('commonLevel').value = 0;
+            document.getElementById('objectskillLevel').value = 1;
+            document.getElementById('objectmasterLevel1').value = 0;
+            document.getElementById('objectmasterLevel2').value = 0;
+            document.getElementById('objectenhancementLevel1').value = 0;
+            document.getElementById('objectenhancementLevel2').value = 0;
+            document.getElementById('objectenhancementLevel3').value = 0;
+            document.getElementById('objectenhancementLevel4').value = 0;
+            document.getElementById('objectcommonLevel').value = 0;
+            document.getElementById('remainFragments').value = 0;
+            document.getElementById('currentsoul').value = 0;
+            document.getElementById('currentsouls').value = 0;
+            document.getElementById('dungeonCompleted').value = true;
+            document.getElementById('dungeonRewards').value = 0;
+            document.getElementById('jobSelect').value = "選擇職業";
+            localStorage.clear();
             calculate();
             updateSkills();
         }
