@@ -274,13 +274,7 @@
         </div>
         <div class="form-group">
             <label for="remainSouls">剩餘氣息</label>
-            <select class="soul-select" id="currentsoul">
-                <script>
-                    for (let i = 0; i <= 20; i++) {
-                        document.write(`<option value="${i}">${i}</option>`);
-                    }
-                </script>
-            </select>
+            <input class="level-input" id="currentsoul" type="number" min="0" max="20" step="1" required>
             <select class="souls-select" id="currentsouls">
                 <script>
                     for (let i = 0; i <= 990; i=i+10) {
@@ -561,6 +555,10 @@
             var objectNeedSouls = [os1s-s1s, om1s-m1s, om2s-m2s, oe1s-e1s, oe2s-e2s, oe3s-e3s, oe4s-e4s, oc1s-c1s];
             var objectNeedSoul = objectNeedSouls.reduce((a, b) => a + b, 0);
             // 計算結果防呆
+            if(soul > 20){
+                soul = 20;
+                souls = 0;
+            }
             if(soul == 20){
                 souls = 0;
             }
